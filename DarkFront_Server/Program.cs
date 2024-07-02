@@ -1,3 +1,4 @@
+
 namespace DarkFront_Server
 {
     public class Program
@@ -12,12 +13,12 @@ namespace DarkFront_Server
 
             var app = builder.Build();
 
+            app.UseWebSockets();
+
             // Configure the HTTP request pipeline.
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
