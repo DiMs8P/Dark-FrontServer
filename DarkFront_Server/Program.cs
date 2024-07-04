@@ -1,4 +1,6 @@
 
+using DarkFront_Server.Services;
+
 namespace DarkFront_Server
 {
     public class Program
@@ -9,6 +11,7 @@ namespace DarkFront_Server
 
             // Add services to the container.
 
+            builder.Services.AddSingleton<PlayerMotionService>();
             builder.Services.AddControllers();
 
             var app = builder.Build();

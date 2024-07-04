@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DarkFront_Server.DTOs;
+using DarkFront_Server.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DarkFront_Server.Controllers
 {
@@ -6,10 +8,22 @@ namespace DarkFront_Server.Controllers
     [Route("player")]
     public class PlayerController : ControllerBase
     {
-        [HttpGet]
-        public string Get()
+        private readonly PlayerMotionService _playerMotionService;
+        public PlayerController(PlayerMotionService playerMotionService)
         {
-            return "Example Response";
+            _playerMotionService = playerMotionService;
+        }
+
+        [HttpPost("update-motion")]
+        public ActionResult<PlayerMotionList> UpdatePlayerLocation([FromBody] PlayerMotion playerMotionRequest)
+        {
+            if (playerMotionRequest is null)
+            {
+                return BadRequest("Invalid request");
+            }
+
+            _playerMotionService.UpdatePlayerState(playerMotionRequest);
+            return Ok(_playerMotionService.GetPlayersNearMe(playerMotionRequest.PlayerName));
         }
     }
 }
